@@ -7,89 +7,245 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --green-primary: #10b981;
+            --green-dark: #059669;
+            --green-light: #d1fae5;
+            --green-bg: #f0fdf4;
+            --green-accent: #34d399;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Light Gray */
-            color: #1f2937; /* Dark Gray */
+            background: #e8f5e9;
+            color: #1f2937;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid #e5e7eb; /* Light border */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        
+        /* Boxy Card Design */
+        .box-card {
+            background: #ffffff;
+            border: 2px solid #10b981;
+            box-shadow: 4px 4px 0px #10b981;
+            transition: all 0.3s ease;
         }
+        
+        .box-card:hover {
+            box-shadow: 6px 6px 0px #059669;
+            transform: translate(-2px, -2px);
+        }
+        
         .skill-tag {
-            background-color: #2563eb; /* Blue */
+            background: #10b981;
             color: #ffffff;
-            padding: 0.35rem 0.85rem;
-            border-radius: 9999px;
+            padding: 0.5rem 1rem;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             display: inline-block;
+            border: 2px solid #059669;
+            box-shadow: 2px 2px 0px #059669;
         }
+        
         .section-heading {
-            color: #1d4ed8; /* Darker Blue */
+            color: var(--green-dark);
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            background: #ffffff;
+            border: 3px solid #10b981;
+            box-shadow: 4px 4px 0px #10b981;
         }
-        /* Animasi untuk loading spinner */
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+        
+        /* Timeline Box Style */
+        .timeline-item {
+            background: #ffffff;
+            border: 2px solid #10b981;
+            box-shadow: 3px 3px 0px #10b981;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
-        .loader {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #2563eb;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 20px;
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border: 2px solid #059669;
+        }
+        
+        .timeline-date {
+            background: #10b981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            border: 2px solid #059669;
+            box-shadow: 2px 2px 0px #059669;
+        }
+        
+        .current-time-badge {
+            background: #fbbf24;
+            color: #000;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            border: 2px solid #f59e0b;
+            box-shadow: 2px 2px 0px #f59e0b;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .hero-box {
+            background: #ffffff;
+            border: 4px solid #10b981;
+            box-shadow: 8px 8px 0px #10b981;
+            padding: 3rem;
+        }
+        
+        .btn-box {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            border: 3px solid #059669;
+            box-shadow: 3px 3px 0px #059669;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-box:hover {
+            box-shadow: 5px 5px 0px #059669;
+            transform: translate(-2px, -2px);
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #059669;
+            box-shadow: 3px 3px 0px #059669;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            box-shadow: 5px 5px 0px #059669;
+            transform: translate(-2px, -2px);
         }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-green-600">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-gray-900">Julyan Widianto</h1>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a>
-                <a href="#skills" class="text-gray-600 hover:text-blue-600 transition-colors">Skills</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-600 transition-colors">Projects</a>
-                <a href="#experience" class="text-gray-600 hover:text-blue-600 transition-colors">Experience</a>
-                <a href="#education" class="text-gray-600 hover:text-blue-600 transition-colors">Education</a>
-                <a href="#honors" class="text-gray-600 hover:text-blue-600 transition-colors">Awards</a>
+            <h1 class="text-xl font-bold text-green-700 border-2 border-green-600 px-4 py-2 bg-green-50">Julyan Widianto</h1>
+            <nav class="hidden md:flex space-x-4">
+                <a href="#about" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">About</a>
+                <a href="#skills" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Skills</a>
+                <a href="#projects" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Projects</a>
+                <a href="#experience" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Experience</a>
+                <a href="#education" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Education</a>
+                <a href="#honors" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Awards</a>
+                <a href="#contact" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold">Contact</a>
             </nav>
+            <button id="mobile-menu-btn" class="md:hidden border-2 border-green-600 p-2 text-green-600 hover:bg-green-600 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t-2 border-green-600">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-2">
+                <a href="#about" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">About</a>
+                <a href="#skills" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">Skills</a>
+                <a href="#projects" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">Projects</a>
+                <a href="#experience" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">Experience</a>
+                <a href="#education" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-green-600 font-semibold text-center">Education</a>
+                <a href="#honors" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">Awards</a>
+                <a href="#contact" class="text-gray-700 hover:text-white hover:bg-green-600 transition-colors px-4 py-2 border-2 border-green-600 font-semibold text-center">Contact</a>
+            </div>
         </div>
     </header>
 
     <main class="container mx-auto px-6 pt-24 md:pt-32">
 
         <!-- Hero Section -->
-        <section id="hero" class="text-center py-16 md:py-24">
-            <img src="https://avatars.githubusercontent.com/u/9389541?v=4" alt="Julyan Widianto" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-gray-300 shadow-lg">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900">Hi, I'm Julyan Widianto</h2>
-            <p class="text-xl md:text-2xl mt-2 text-blue-600">Software Engineer | AI & IoT Enthusiast</p>
-            <p class="max-w-2xl mx-auto mt-4 text-gray-600">
-                A passionate software engineer with experience in building and maintaining scalable web applications. I love solving complex problems and turning ideas into reality through code.
-            </p>
-            <div class="mt-8 flex justify-center items-center space-x-6">
-                <a href="https://github.com/sultanjulyan" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-900 transition-colors" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/julyan-widianto/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-900 transition-colors" aria-label="LinkedIn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
+        <section id="hero" class="text-center py-16 md:py-20">
+            <div class="hero-box max-w-4xl mx-auto">
+                <img src="https://avatars.githubusercontent.com/u/9389541?v=4" alt="Julyan Widianto" class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 border-4 border-green-600 shadow-[6px_6px_0px_#059669]">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Hi, I'm Julyan Widianto</h2>
+                <p class="text-xl md:text-2xl mt-2 text-green-600 font-bold mb-4">Software Engineer | AI & IoT Enthusiast</p>
+                <p class="max-w-2xl mx-auto text-gray-700 leading-relaxed font-medium">
+                    A passionate software engineer with experience in building and maintaining scalable web applications. I love solving complex problems and turning ideas into reality through code.
+                </p>
+                <div class="mt-6 flex justify-center items-center gap-4 flex-wrap">
+                    <span class="text-sm font-semibold text-gray-600 border-2 border-green-600 px-3 py-1 bg-green-50">📍 Bandung, Indonesia</span>
+                    <span class="text-sm font-semibold text-gray-600 border-2 border-green-600 px-3 py-1 bg-green-50">✉️ julyan.widianto@gmail.com</span>
+                </div>
+                <div class="mt-6 flex justify-center items-center space-x-6">
+                    <a href="https://github.com/sultanjulyan" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-800 transition-colors border-2 border-green-600 p-2 hover:shadow-[4px_4px_0px_#059669]" aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/julyan-widianto/" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-800 transition-colors border-2 border-green-600 p-2 hover:shadow-[4px_4px_0px_#059669]" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-12">
+            <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="box-card p-6 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">10+</div>
+                    <div class="text-sm font-semibold text-gray-700">Years Experience</div>
+                </div>
+                <div class="box-card p-6 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">50+</div>
+                    <div class="text-sm font-semibold text-gray-700">Projects Completed</div>
+                </div>
+                <div class="box-card p-6 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">7+</div>
+                    <div class="text-sm font-semibold text-gray-700">Awards Won</div>
+                </div>
+                <div class="box-card p-6 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2">15+</div>
+                    <div class="text-sm font-semibold text-gray-700">Tech Stacks</div>
+                </div>
             </div>
         </section>
 
         <!-- About Me -->
         <section id="about" class="py-16">
             <h3 class="text-3xl font-bold text-center mb-8 section-heading">🚀 About Me</h3>
-            <div class="max-w-3xl mx-auto glass-card p-8 rounded-lg text-center">
+            <div class="max-w-3xl mx-auto box-card p-8  text-center">
                 <p id="about-text" class="text-lg leading-relaxed text-gray-700 text-left">
                     I’m a technology enthusiast with a passion for AI, IoT, and scalable software solutions.
                     <br><br>
@@ -100,7 +256,7 @@
                     <strong class="text-gray-800">📡 IoT Projects:</strong> Smart sensors, GPS tracking, MQTT communication<br>
                     <strong class="text-gray-800">🤖 AI Projects:</strong> NLP, computer vision, custom model training
                 </p>
-<!--                 <button id="generate-snippet-btn" class="mt-8 bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md">
+<!--                 <button id="generate-snippet-btn" class="mt-8 bg-blue-600 text-white font-semibold py-2 px-6  hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md">
                     ✨ Buatkan Paragraf Surat Lamaran
                 </button> -->
             </div>
@@ -108,36 +264,36 @@
 
         <!-- Skills Section -->
         <section id="skills" class="py-16">
-            <h3 class="text-3xl font-bold text-center mb-12 section-heading">🧠 Technical Skills</h3>
-            <div class="max-w-5xl mx-auto glass-card p-8 rounded-lg">
+            <h3 class="text-3xl font-bold text-center mb-12 section-heading">Technical Skills</h3>
+            <div class="max-w-5xl mx-auto box-card p-8 ">
                 <h4 class="text-2xl font-bold text-gray-900 mb-6 text-center md:text-left">Languages & Frameworks</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
                     <div>
-                        <h5 class="font-semibold text-lg text-blue-700 mb-3">Frontend</h5>
+                        <h5 class="font-semibold text-lg text-green-700 mb-3">Frontend</h5>
                         <div class="flex flex-wrap gap-2">
                             <span class="skill-tag">React</span><span class="skill-tag">Vue</span><span class="skill-tag">HTML/CSS</span><span class="skill-tag">JavaScript</span>
                         </div>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-lg text-blue-700 mb-3">Backend</h5>
+                        <h5 class="font-semibold text-lg text-green-700 mb-3">Backend</h5>
                         <div class="flex flex-wrap gap-2">
                             <span class="skill-tag">PHP (Laravel)</span><span class="skill-tag">Node.js</span><span class="skill-tag">Python (Flask/FastAPI)</span>
                         </div>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-lg text-blue-700 mb-3">Mobile</h5>
+                        <h5 class="font-semibold text-lg text-green-700 mb-3">Mobile</h5>
                         <div class="flex flex-wrap gap-2">
                             <span class="skill-tag">Flutter</span><span class="skill-tag">Kotlin</span><span class="skill-tag">Java</span>
                         </div>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-lg text-blue-700 mb-3">IoT</h5>
+                        <h5 class="font-semibold text-lg text-green-700 mb-3">IoT</h5>
                         <div class="flex flex-wrap gap-2">
                             <span class="skill-tag">ESP32</span><span class="skill-tag">Arduino</span><span class="skill-tag">MQTT</span><span class="skill-tag">Sensor Integration</span>
                         </div>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-lg text-blue-700 mb-3">Databases</h5>
+                        <h5 class="font-semibold text-lg text-green-700 mb-3">Databases</h5>
                         <div class="flex flex-wrap gap-2">
                             <span class="skill-tag">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">Oracle</span><span class="skill-tag">SQLite</span>
                         </div>
@@ -146,7 +302,7 @@
 
                 <h4 class="text-2xl font-bold text-gray-900 mb-6 text-center md:text-left">Specialties</h4>
                 <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span class="skill-tag">AI model training (LLaMA, GPT-based)</span>
+                    <span class="skill-tag">AI model training</span>
                     <span class="skill-tag">Workflow automation (n8n, custom APIs)</span>
                     <span class="skill-tag">Cloud deployments & integration</span>
                     <span class="skill-tag">Machine learning model</span>
@@ -159,109 +315,109 @@
             <h3 class="text-3xl font-bold text-center mb-12 section-heading">Featured Projects</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">SmartBin</h4>
                         <p class="text-gray-600 text-sm mb-4">End-to-end IoT system for a smart trash bin, covering architecture design, ESP32 hardware integration, web monitoring, and backend development.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-teal-800 bg-teal-100">IoT</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-800 bg-gray-100">ESP32</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-cyan-800 bg-cyan-100">Vue.js</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-800 bg-gray-100">Flask</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">IoT</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-gray-800 bg-gray-100">ESP32</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-emerald-800 bg-emerald-100">Vue.js</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-gray-800 bg-gray-100">Flask</span>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">myIndiHome Technician</h4>
                         <p class="text-gray-600 text-sm mb-4">Developed an application for IndiHome technicians to support service installation and troubleshoot network issues.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-purple-800 bg-purple-100">Kotlin</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-800 bg-yellow-100">Firebase</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-purple-800 bg-purple-100">Kotlin</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-yellow-800 bg-yellow-100">Firebase</span>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">DOOR HRMIS</h4>
                         <p class="text-gray-600 text-sm mb-4">DOOR will assist you in managing Human Resources Management that is tailored to the scale of your business.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-800 bg-indigo-100">PHP</span>
-                         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-800 bg-red-100">Laravel</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-800 bg-blue-100">MySQL</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-indigo-800 bg-indigo-100">PHP</span>
+                         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-red-800 bg-red-100">Laravel</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-blue-800 bg-blue-100">MySQL</span>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">myIndiHome Partner</h4>
                         <p class="text-gray-600 text-sm mb-4">Developed an application for IndiHome sales to support service installation.</p>
                     </div>
                      <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-purple-800 bg-purple-100">Kotlin</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-800 bg-yellow-100">Firebase</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-purple-800 bg-purple-100">Kotlin</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-yellow-800 bg-yellow-100">Firebase</span>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">siBen</h4>
                         <p class="text-gray-600 text-sm mb-4">Early Warning System for Natural Disasters, covering floods, forest fires, and earthquakes. Integrated with a CCTV Monitoring System for real-time situation awareness and rapid response.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-teal-800 bg-teal-100">IoT</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-cyan-800 bg-cyan-100">Flutter</span>
-                         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-800 bg-gray-100">ESP32</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-teal-800 bg-teal-100">IoT</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-cyan-800 bg-cyan-100">Flutter</span>
+                         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-gray-800 bg-gray-100">ESP32</span>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">iWatchYou</h4>
                         <p class="text-gray-600 text-sm mb-4">iWatchYou is application to monitoring client(children) activity when using computer or internet (online &amp; offline).</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-gray-800 bg-gray-100">Windows</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-800 bg-blue-100">iOS</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-gray-800 bg-gray-100">Windows</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-blue-800 bg-blue-100">iOS</span>
                     </div>
                 </div>
 
-                 <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                 <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">myIndiHome Customer</h4>
                         <p class="text-gray-600 text-sm mb-4">MyIndiHome is a convenient and user-friendly application for IndiHome registration, accessible anytime and anywhere.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-purple-800 bg-purple-100">Kotlin</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-800 bg-yellow-100">Firebase</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-purple-800 bg-purple-100">Kotlin</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-yellow-800 bg-yellow-100">Firebase</span>
                     </div>
                 </div>
 
-                 <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                 <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">Easyblood</h4>
                         <p class="text-gray-600 text-sm mb-4">PMI Kota Bandung, in collaboration with Telkom Indonesia and Neuronworks Indonesia presents Easy Blood, a mobile-based application designed to foster social care.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-purple-800 bg-purple-100">Java</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-purple-800 bg-purple-100">Java</span>
                     </div>
                 </div>
                 
-                 <div class="glass-card rounded-lg p-6 flex flex-col justify-between">
+                 <div class="box-card  p-6 flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-xl text-gray-900 mb-2">Manage Me</h4>
                         <p class="text-gray-600 text-sm mb-4">Manage your Income and Outcome with this Application. Available in Android.</p>
                     </div>
                      <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-800 bg-green-100">Android</span>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase  text-green-800 bg-green-100">Android</span>
                     </div>
                 </div>
             </div>
@@ -270,107 +426,167 @@
         <!-- Experience Section -->
         <section id="experience" class="py-16">
             <h3 class="text-3xl font-bold text-center mb-12 section-heading">Work Experience</h3>
-            <div class="max-w-3xl mx-auto">
-                <div class="relative border-l-2 border-gray-300 ml-3">
-                    <!-- Experience Item: Neuronworks -->
-                    <div class="mb-10 ml-10">
-                        <div class="absolute w-6 h-6 bg-blue-600 rounded-full -left-3 border-4 border-white"></div>
-                        <h4 class="font-bold text-xl text-gray-900">PT. Neuronworks Indonesia</h4>
-                        <p class="text-sm text-gray-500">10 yrs 2 mos</p>
-                        
-                        <div class="mt-4">
-                            <h5 class="font-semibold text-lg text-gray-800">Research Technology Manager</h5>
-                            <p class="text-sm text-gray-500">Feb 2025 - Present · 7 mos</p>
-                        </div>
-                         <div class="mt-4">
-                            <h5 class="font-semibold text-lg text-gray-800">Supervisor of Maintenance Support and Operational Services</h5>
-                            <p class="text-sm text-gray-500">Dec 2021 - Feb 2025 · 3 yrs 3 mos</p>
-                        </div>
-                         <div class="mt-4">
-                            <h5 class="font-semibold text-lg text-gray-800">Senior Programmer</h5>
-                            <p class="text-sm text-gray-500">Jul 2021 - Dec 2021 · 6 mos</p>
-                        </div>
-                         <div class="mt-4">
-                            <h5 class="font-semibold text-lg text-gray-800">Programmer</h5>
-                            <p class="text-sm text-gray-500">Jul 2015 - Jul 2021 · 6 yrs 1 mo</p>
-                        </div>
+            <div class="max-w-4xl mx-auto">
+                <!-- Current Time Display -->
+                <div class="mb-8 text-center">
+                    <span class="current-time-badge" id="current-time">Loading...</span>
+                </div>
+                
+                <!-- Experience Item: Neuronworks -->
+                <div class="timeline-item">
+                    <h4 class="font-bold text-2xl text-gray-900 mb-2">PT. Neuronworks Indonesia</h4>
+                    <span class="timeline-date mb-4 inline-block">10 yrs 2 mos</span>
+                    
+                    <div class="mt-4 pl-4 border-l-4 border-green-600">
+                        <h5 class="font-semibold text-lg text-gray-800">Research Technology Manager</h5>
+                        <span class="timeline-date mt-1 inline-block">Feb 2025 - Present · <span class="duration-rtm">Calculating...</span></span>
                     </div>
-                    <!-- Experience Item: ODT -->
-                    <div class="mb-10 ml-10">
-                        <div class="absolute w-6 h-6 bg-blue-600 rounded-full -left-3 border-4 border-white"></div>
-                        <h4 class="font-bold text-xl text-gray-900">ODT Indonesia</h4>
-                        <p class="text-md text-gray-700">Web and Mobile Programmer</p>
-                        <p class="text-sm text-gray-500">Jan 2012 - Jan 2016 · 4 yrs 1 mo</p>
+                    <div class="mt-4 pl-4 border-l-4 border-green-400">
+                        <h5 class="font-semibold text-lg text-gray-800">Supervisor of Maintenance Support and Operational Services</h5>
+                        <span class="timeline-date mt-1 inline-block">Dec 2021 - Feb 2025 · 3 yrs 3 mos</span>
                     </div>
-                     <!-- Experience Item: LAPAN -->
-                    <div class="mb-10 ml-10">
-                        <div class="absolute w-6 h-6 bg-blue-600 rounded-full -left-3 border-4 border-white"></div>
-                        <h4 class="font-bold text-xl text-gray-900">Lembaga Penerbangan dan Antariksa Nasional</h4>
-                        <p class="text-md text-gray-700">Web Programmer</p>
-                        <p class="text-sm text-gray-500">Jul 2014 - Sep 2014 · 3 mos</p>
+                    <div class="mt-4 pl-4 border-l-4 border-green-400">
+                        <h5 class="font-semibold text-lg text-gray-800">Senior Programmer</h5>
+                        <span class="timeline-date mt-1 inline-block">Jul 2021 - Dec 2021 · 6 mos</span>
                     </div>
+                    <div class="mt-4 pl-4 border-l-4 border-green-400">
+                        <h5 class="font-semibold text-lg text-gray-800">Programmer</h5>
+                        <span class="timeline-date mt-1 inline-block">Jul 2015 - Jul 2021 · 6 yrs 1 mo</span>
+                    </div>
+                </div>
+                
+                <!-- Experience Item: ODT -->
+                <div class="timeline-item">
+                    <h4 class="font-bold text-2xl text-gray-900 mb-2">ODT Indonesia</h4>
+                    <p class="text-lg text-gray-700 font-semibold">Web and Mobile Programmer</p>
+                    <span class="timeline-date mt-2 inline-block">Jan 2012 - Jan 2016 · 4 yrs 1 mo</span>
+                </div>
+                
+                <!-- Experience Item: LAPAN -->
+                <div class="timeline-item">
+                    <h4 class="font-bold text-2xl text-gray-900 mb-2">Lembaga Penerbangan dan Antariksa Nasional</h4>
+                    <p class="text-lg text-gray-700 font-semibold">Web Programmer</p>
+                    <span class="timeline-date mt-2 inline-block">Jul 2014 - Sep 2014 · 3 mos</span>
                 </div>
             </div>
         </section>
 
         <!-- Education Section -->
         <section id="education" class="py-16">
-            <h3 class="text-3xl font-bold text-center mb-12 section-heading">🎓 Education</h3>
-            <div class="max-w-3xl mx-auto">
-                <div class="relative border-l-2 border-gray-300 ml-3">
-                    <!-- Education Item 1: ITB -->
-                    <div class="mb-10 ml-10">
-                        <div class="absolute w-6 h-6 bg-blue-600 rounded-full -left-3 border-4 border-white"></div>
-                        <p class="text-sm text-gray-500 mb-1">2025 - 2027</p>
-                        <h4 class="font-bold text-xl text-gray-900">Institut Teknologi Bandung</h4>
-                        <p class="text-lg text-gray-700">Master's degree, Artificial Intelligence</p>
-                        <p class="text-base text-gray-600 mt-2">Focus on theoretical foundations and advanced applications of AI, including Deep Learning, MLOps, and more.</p>
+            <h3 class="text-3xl font-bold text-center mb-12 section-heading">Education</h3>
+            <div class="max-w-4xl mx-auto">
+                <!-- Education Item 1: ITB -->
+                <div class="timeline-item">
+                    <span class="timeline-date mb-3 inline-block">2025 - 2027</span>
+                    <h4 class="font-bold text-2xl text-gray-900">Institut Teknologi Bandung</h4>
+                    <p class="text-lg text-gray-700 font-semibold mt-2">Master's degree, Artificial Intelligence</p>
+                    <p class="text-base text-gray-600 mt-3">Artificial Intelligence at ITB covers both theoretical foundations and advanced applications of AI, including Advanced AI (logic, intelligent agents, probabilistic methods), Mathematics for AI (linear algebra, calculus, probability, optimization), Deep Learning (CNNs, RNNs, LSTMs, regularization), as well as industrial applications of AI through MLOps (deployment, monitoring, security, ethics).</p>
+                    <div class="mt-4 pt-4 border-t-2 border-green-200">
+                        <p class="text-sm font-bold text-green-700 mb-2">Thesis Advisors:</p>
+                        <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                            <li>• Dr. Eng. Ayu Purwarianti, S.T., M.T.</li>
+                            <li>• Dery Tanti Wijaya, Ph.D.</li>
+                        </ul>
                     </div>
-                    <!-- Education Item 2: Widyatama -->
-                    <div class="mb-10 ml-10">
-                        <div class="absolute w-6 h-6 bg-blue-600 rounded-full -left-3 border-4 border-white"></div>
-                        <p class="text-sm text-gray-500 mb-1">2015 - 2019</p>
-                        <h4 class="font-bold text-xl text-gray-900">Universitas Widyatama</h4>
-                        <p class="text-lg text-gray-700">Bachelor's Degree, Computer Science</p>
-                        <p class="text-base text-gray-600 mt-2">Final project involved developing an Early Warning System for Natural Disasters with CCTV integration and mobile alerts.</p>
-                    </div>
+                </div>
+                
+                <!-- Education Item 2: Widyatama -->
+                <div class="timeline-item">
+                    <span class="timeline-date mb-3 inline-block">2015 - 2019</span>
+                    <h4 class="font-bold text-2xl text-gray-900">Universitas Widyatama</h4>
+                    <p class="text-lg text-gray-700 font-semibold mt-2">Bachelor's Degree, Computer Science</p>
+                    <p class="text-base text-gray-600 mt-3">The final project focuses on developing an Early Warning System for Natural Disasters, covering floods, forest fires, and earthquakes. Integrated with a CCTV Monitoring System for real-time situation awareness and rapid response. The system will feature web-based and mobile alert capabilities to ensure timely notifications and efficient monitoring.</p>
                 </div>
             </div>
         </section>
 
         <!-- Honors and Awards Section -->
         <section id="honors" class="py-16">
-            <h3 class="text-3xl font-bold text-center mb-12 section-heading">🏆 Honors & Awards</h3>
+            <h3 class="text-3xl font-bold text-center mb-12 section-heading">Honors & Awards</h3>
             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Award Card - NEW -->
+                <div class="box-card p-6  border-2 border-green-300">
+                    <h4 class="font-bold text-lg text-gray-900">🏆 1st Winner - ESGI Dataset Business Plan Competition 2025</h4>
+                    <p class="text-sm text-gray-600 mt-2">"Sustain-Tech Team", Grand Champion for Sub Theme 1: Sustainability Reporting Revolution at ED-BPC 2025</p>
+                    <p class="text-xs text-green-600 font-semibold mt-2">2025</p>
+                </div>
                 <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🎓 LPDP Awardee PK-260</h4>
                     <p class="text-sm text-gray-600">Issued by LPDP (Lembaga Pengelola Dana Pendidikan)</p>
                 </div>
                 <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🥉 3rd Place - IWIC Hackathon 9</h4>
                     <p class="text-sm text-gray-600">Issued by PT. Indosat Tbk. &middot; Oct 2015</p>
                 </div>
                 <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🥉 3rd Place - Android Action</h4>
                     <p class="text-sm text-gray-600">Issued by Dian Nuswatoro University &middot; Jan 2015</p>
                 </div>
                 <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🥈 Runner Up - Anugerah Motekar Unpad</h4>
                     <p class="text-sm text-gray-600">Issued by Padjajaran University &middot; Dec 2014</p>
                 </div>
                 <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🏅 Top 75 Apps Hackathon BestAppsID</h4>
                     <p class="text-sm text-gray-600">Issued by Telkom Indonesia &middot; Nov 2014</p>
                 </div>
                  <!-- Award Card -->
-                <div class="glass-card p-6 rounded-lg">
+                <div class="box-card p-6 ">
                     <h4 class="font-bold text-lg text-gray-900">🏅 Nominator Indonesia ICT Award</h4>
                     <p class="text-sm text-gray-600">Issued by Ministry of Communication and Informatics &middot; Sep 2014</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16">
+            <h3 class="text-3xl font-bold text-center mb-12 section-heading">Get In Touch</h3>
+            <div class="max-w-4xl mx-auto">
+                <div class="box-card p-8 mb-8">
+                    <p class="text-center text-gray-700 text-lg mb-8 font-medium">
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Email -->
+                        <div class="box-card p-6 text-center hover:scale-105 transition-transform">
+                            <div class="text-4xl mb-3">📧</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Email</h4>
+                            <a href="mailto:julyan.widianto@gmail.com" class="text-green-600 font-semibold hover:underline">julyan.widianto@gmail.com</a>
+                        </div>
+                        
+                        <!-- LinkedIn -->
+                        <div class="box-card p-6 text-center hover:scale-105 transition-transform">
+                            <div class="text-4xl mb-3">💼</div>
+                            <h4 class="font-bold text-gray-900 mb-2">LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/julyan-widianto/" target="_blank" class="text-green-600 font-semibold hover:underline">julyan-widianto</a>
+                        </div>
+                        
+                        <!-- GitHub -->
+                        <div class="box-card p-6 text-center hover:scale-105 transition-transform">
+                            <div class="text-4xl mb-3">💻</div>
+                            <h4 class="font-bold text-gray-900 mb-2">GitHub</h4>
+                            <a href="https://github.com/sultanjulyan" target="_blank" class="text-green-600 font-semibold hover:underline">sultanjulyan</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="box-card p-6">
+                    <h4 class="font-bold text-lg text-gray-900 mb-4 text-center">Quick Links</h4>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <a href="#about" class="btn-box text-sm">About</a>
+                        <a href="#skills" class="btn-box text-sm">Skills</a>
+                        <a href="#projects" class="btn-box text-sm">Projects</a>
+                        <a href="#experience" class="btn-box text-sm">Experience</a>
+                        <a href="#education" class="btn-box text-sm">Education</a>
+                        <a href="#honors" class="btn-box text-sm">Awards</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -378,111 +594,114 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-200 mt-16">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2024 Julyan Widianto. All Rights Reserved.</p>
+    <footer class="border-t-4 border-green-600 mt-16 bg-white">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-700 font-semibold">&copy; 2025 Julyan Widianto. All Rights Reserved.</p>
+                <div class="flex gap-4">
+                    <a href="https://github.com/sultanjulyan" target="_blank" class="text-green-600 hover:text-green-800 border-2 border-green-600 p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/julyan-widianto/" target="_blank" class="text-green-600 hover:text-green-800 border-2 border-green-600 p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- Modal untuk hasil dari Gemini -->
-    <div id="gemini-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl p-6 relative">
-            <button id="close-modal-btn" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Saran Paragraf Surat Lamaran</h3>
-            <div id="modal-content" class="text-gray-700 space-y-4">
-                <!-- Konten akan diisi oleh JavaScript -->
-            </div>
-            <div id="modal-loader" class="absolute inset-0 bg-white/80 flex items-center justify-center hidden">
-                <div class="loader"></div>
-            </div>
-        </div>
-    </div>
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin: auto;">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
 
     <script>
-        // --- Gemini API Integration ---
-
-        const generateBtn = document.getElementById('generate-snippet-btn');
-        const modal = document.getElementById('gemini-modal');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const modalContent = document.getElementById('modal-content');
-        const modalLoader = document.getElementById('modal-loader');
-
-        // Fungsi untuk memanggil Gemini API dengan exponential backoff
-        async function callGeminiWithBackoff(prompt, maxRetries = 3) {
-            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            const payload = { contents: chatHistory };
-            const apiKey = ""; // Kunci API tidak diperlukan jika menggunakan model default
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+        // Real-time date and time update
+        function updateDateTime() {
+            const now = new Date();
             
-            let attempt = 0;
-            while (attempt < maxRetries) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        return result.candidates[0].content.parts[0].text;
-                    } else {
-                        throw new Error("Invalid response structure from API.");
-                    }
-                } catch (error) {
-                    console.error(`Attempt ${attempt + 1} failed:`, error);
-                    attempt++;
-                    if (attempt < maxRetries) {
-                        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                    } else {
-                        throw error; // Gagal setelah semua percobaan
-                    }
-                }
+            // Format date and time
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            
+            const dateTimeString = now.toLocaleDateString('en-US', options);
+            const currentTimeElement = document.getElementById('current-time');
+            if (currentTimeElement) {
+                currentTimeElement.textContent = `📅 ${dateTimeString}`;
+            }
+            
+            // Calculate duration for current position
+            const startDate = new Date('2025-02-01');
+            const diffTime = Math.abs(now - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const years = Math.floor(diffDays / 365);
+            const months = Math.floor((diffDays % 365) / 30);
+            
+            let durationText = '';
+            if (years > 0) {
+                durationText += `${years} yr${years > 1 ? 's' : ''} `;
+            }
+            if (months > 0) {
+                durationText += `${months} mo${months > 1 ? 's' : ''}`;
+            }
+            if (!durationText) {
+                durationText = 'Less than 1 month';
+            }
+            
+            const durationElement = document.querySelector('.duration-rtm');
+            if (durationElement) {
+                durationElement.textContent = durationText;
             }
         }
-
-        // Event listener untuk tombol generate
-        generateBtn.addEventListener('click', async () => {
-            modal.classList.remove('hidden');
-            modalLoader.classList.remove('hidden');
-            modalContent.innerHTML = '';
-
-            const aboutText = document.getElementById('about-text').innerText;
-            const prompt = `Based on the following professional bio, write a short and compelling paragraph for a cover letter in Indonesian. The paragraph should highlight the key strengths, passion for technology (AI, IoT), and professional background of this individual. Make it sound professional and engaging for a recruiter:\n\n"${aboutText}"`;
-
-            try {
-                const generatedText = await callGeminiWithBackoff(prompt);
-                modalContent.innerHTML = `<p>${generatedText.replace(/\n/g, '<br>')}</p>`;
-            } catch (error) {
-                console.error('Error fetching from Gemini API:', error);
-                modalContent.innerHTML = '<p class="text-red-600">Maaf, terjadi kesalahan saat mengambil data. Silakan coba lagi nanti.</p>';
-            } finally {
-                modalLoader.classList.add('hidden');
+        
+        // Update immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close menu when clicking on links
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+        
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
             }
         });
-
-        // Event listener untuk menutup modal
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
-
-        // Menutup modal jika klik di luar area konten
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.classList.add('hidden');
-            }
-        });
-
     </script>
 
 </body>
