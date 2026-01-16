@@ -217,6 +217,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     </a>
                 </div>
+                <div class="mt-8">
+                    <button onclick="downloadCV()" class="btn-box inline-flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download CV
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -702,6 +708,382 @@
                 behavior: 'smooth'
             });
         });
+
+        // Download CV Function - ATS Oxford Template
+        function downloadCV() {
+            // Create a new window for the CV
+            const cvWindow = window.open('', '_blank');
+            
+            // CV Data extracted from website
+            const cvData = {
+                name: 'Julyan Widianto',
+                title: 'Software Engineer | AI & IoT Enthusiast',
+                location: 'Bandung, Indonesia',
+                email: 'julyan.widianto@gmail.com',
+                linkedin: 'linkedin.com/in/julyan-widianto',
+                github: 'github.com/sultanjulyan',
+                summary: 'A passionate software engineer with 10+ years of experience in building and maintaining scalable web applications. Currently pursuing Master\'s degree in Artificial Intelligence at Institut Teknologi Bandung. Expert in AI-driven automation, IoT product development, and full-stack development across Frontend, Backend, Mobile, and Embedded Systems.',
+                skills: {
+                    frontend: ['React', 'Vue', 'HTML/CSS', 'JavaScript'],
+                    backend: ['PHP (Laravel)', 'Node.js', 'Python (Flask/FastAPI)'],
+                    mobile: ['Flutter', 'Kotlin', 'Java'],
+                    iot: ['ESP32', 'Arduino', 'MQTT', 'Sensor Integration'],
+                    databases: ['PostgreSQL', 'MySQL', 'Oracle', 'SQLite'],
+                    specialties: ['AI model training', 'Workflow automation (n8n, custom APIs)', 'Cloud deployments & integration', 'Machine learning model']
+                },
+                experience: [
+                    {
+                        company: 'PT. Neuronworks Indonesia',
+                        positions: [
+                            { title: 'Research Technology Manager', period: 'Feb 2025 - Present' },
+                            { title: 'Supervisor of Maintenance Support and Operational Services', period: 'Dec 2021 - Feb 2025' },
+                            { title: 'Senior Programmer', period: 'Jul 2021 - Dec 2021' },
+                            { title: 'Programmer', period: 'Jul 2015 - Jul 2021' }
+                        ]
+                    },
+                    {
+                        company: 'ODT Indonesia',
+                        positions: [
+                            { title: 'Web and Mobile Programmer', period: 'Jan 2012 - Jan 2016' }
+                        ]
+                    },
+                    {
+                        company: 'Lembaga Penerbangan dan Antariksa Nasional (LAPAN)',
+                        positions: [
+                            { title: 'Web Programmer', period: 'Jul 2014 - Sep 2014' }
+                        ]
+                    }
+                ],
+                education: [
+                    {
+                        institution: 'Institut Teknologi Bandung',
+                        degree: 'Master\'s degree, Artificial Intelligence',
+                        period: '2025 - 2027',
+                        details: 'Focus on Advanced AI, Deep Learning, MLOps, and Mathematics for AI.'
+                    },
+                    {
+                        institution: 'Universitas Widyatama',
+                        degree: 'Bachelor\'s Degree, Computer Science',
+                        period: '2015 - 2019',
+                        details: 'Final project: Early Warning System for Natural Disasters with CCTV Monitoring.'
+                    }
+                ],
+                awards: [
+                    '1st Winner - ESGI Dataset Business Plan Competition 2025',
+                    'LPDP Awardee PK-260',
+                    '3rd Place - IWIC Hackathon 9 (Indosat, 2015)',
+                    '3rd Place - Android Action (Dian Nuswatoro University, 2015)',
+                    'Runner Up - Anugerah Motekar Unpad (2014)',
+                    'Top 75 Apps Hackathon BestAppsID (Telkom Indonesia, 2014)',
+                    'Nominator Indonesia ICT Award (Ministry of Communication and Informatics, 2014)'
+                ],
+                projects: [
+                    'SmartBin - End-to-end IoT system for smart trash bin',
+                    'myIndiHome Technician - Mobile app for IndiHome technicians',
+                    'DOOR HRMIS - Human Resources Management System',
+                    'siBen - Early Warning System for Natural Disasters',
+                    'iWatchYou - Parental monitoring application'
+                ]
+            };
+
+            // Generate ATS-friendly Oxford style CV HTML
+            const cvHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - ${cvData.name}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000;
+            background: #fff;
+            padding: 0.5in;
+            max-width: 8.5in;
+            margin: 0 auto;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+        }
+        
+        /* Header - Oxford Style */
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .name {
+            font-size: 24pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .contact-info {
+            font-size: 10pt;
+            color: #333;
+        }
+        
+        .contact-info span {
+            margin: 0 8px;
+        }
+        
+        /* Section Styling - Oxford */
+        .section {
+            margin-bottom: 18px;
+        }
+        
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 3px;
+            margin-bottom: 10px;
+        }
+        
+        /* Experience & Education Items */
+        .item {
+            margin-bottom: 12px;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .item-title {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+        
+        .item-subtitle {
+            font-style: italic;
+            font-size: 10.5pt;
+        }
+        
+        .item-date {
+            font-size: 10pt;
+            color: #333;
+        }
+        
+        .item-description {
+            font-size: 10.5pt;
+            margin-top: 4px;
+            text-align: justify;
+        }
+        
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .skill-category {
+            margin-bottom: 6px;
+        }
+        
+        .skill-label {
+            font-weight: bold;
+            font-size: 10pt;
+        }
+        
+        .skill-items {
+            font-size: 10pt;
+        }
+        
+        /* Lists */
+        ul {
+            margin-left: 20px;
+            font-size: 10.5pt;
+        }
+        
+        li {
+            margin-bottom: 3px;
+        }
+        
+        /* Summary */
+        .summary {
+            text-align: justify;
+            font-size: 10.5pt;
+            margin-bottom: 5px;
+        }
+        
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .print-btn:hover {
+            background: #059669;
+        }
+        
+        @media print {
+            .print-btn {
+                display: none;
+            }
+        }
+        
+        /* Position list */
+        .position-list {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+        
+        .position-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            font-size: 10.5pt;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">📄 Print / Save PDF</button>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="name">${cvData.name}</div>
+        <div class="contact-info">
+            <span>📍 ${cvData.location}</span>
+            <span>|</span>
+            <span>✉️ ${cvData.email}</span>
+            <span>|</span>
+            <span>💼 ${cvData.linkedin}</span>
+            <span>|</span>
+            <span>💻 ${cvData.github}</span>
+        </div>
+    </div>
+    
+    <!-- Professional Summary -->
+    <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <p class="summary">${cvData.summary}</p>
+    </div>
+    
+    <!-- Work Experience -->
+    <div class="section">
+        <div class="section-title">Professional Experience</div>
+        ${cvData.experience.map(exp => `
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">${exp.company}</div>
+                </div>
+                <div class="position-list">
+                    ${exp.positions.map(pos => `
+                        <div class="position-item">
+                            <span class="item-subtitle">${pos.title}</span>
+                            <span class="item-date">${pos.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('')}
+    </div>
+    
+    <!-- Education -->
+    <div class="section">
+        <div class="section-title">Education</div>
+        ${cvData.education.map(edu => `
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">${edu.institution}</div>
+                        <div class="item-subtitle">${edu.degree}</div>
+                    </div>
+                    <div class="item-date">${edu.period}</div>
+                </div>
+                <p class="item-description">${edu.details}</p>
+            </div>
+        `).join('')}
+    </div>
+    
+    <!-- Technical Skills -->
+    <div class="section">
+        <div class="section-title">Technical Skills</div>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <span class="skill-label">Frontend:</span>
+                <span class="skill-items">${cvData.skills.frontend.join(', ')}</span>
+            </div>
+            <div class="skill-category">
+                <span class="skill-label">Backend:</span>
+                <span class="skill-items">${cvData.skills.backend.join(', ')}</span>
+            </div>
+            <div class="skill-category">
+                <span class="skill-label">Mobile:</span>
+                <span class="skill-items">${cvData.skills.mobile.join(', ')}</span>
+            </div>
+            <div class="skill-category">
+                <span class="skill-label">IoT:</span>
+                <span class="skill-items">${cvData.skills.iot.join(', ')}</span>
+            </div>
+            <div class="skill-category">
+                <span class="skill-label">Databases:</span>
+                <span class="skill-items">${cvData.skills.databases.join(', ')}</span>
+            </div>
+            <div class="skill-category">
+                <span class="skill-label">Specialties:</span>
+                <span class="skill-items">${cvData.skills.specialties.join(', ')}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Key Projects -->
+    <div class="section">
+        <div class="section-title">Key Projects</div>
+        <ul>
+            ${cvData.projects.map(project => `<li>${project}</li>`).join('')}
+        </ul>
+    </div>
+    
+    <!-- Awards & Honors -->
+    <div class="section">
+        <div class="section-title">Honors & Awards</div>
+        <ul>
+            ${cvData.awards.map(award => `<li>${award}</li>`).join('')}
+        </ul>
+    </div>
+</body>
+</html>
+            `;
+
+            // Write the CV to the new window
+            cvWindow.document.write(cvHTML);
+            cvWindow.document.close();
+        }
     </script>
 
 </body>
