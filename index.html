@@ -711,9 +711,6 @@
 
         // Download CV Function - ATS Oxford Template
         function downloadCV() {
-            // Create a new window for the CV
-            const cvWindow = window.open('', '_blank');
-            
             // CV Data extracted from website
             const cvData = {
                 name: 'Julyan Widianto',
@@ -824,9 +821,26 @@
             // Generate ATS-friendly Oxford style CV HTML
             const cvHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>CV - ' + cvData.name + '</title><style>@import url("https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap");*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Times New Roman",Times,serif;font-size:11pt;line-height:1.4;color:#000;background:#fff;padding:0.5in;max-width:8.5in;margin:0 auto}@media print{body{padding:0}}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:15px;margin-bottom:20px}.name{font-size:24pt;font-weight:bold;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}.contact-info{font-size:10pt;color:#333}.contact-info span{margin:0 8px}.section{margin-bottom:18px}.section-title{font-size:12pt;font-weight:bold;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #000;padding-bottom:3px;margin-bottom:10px}.summary{text-align:justify;font-size:10.5pt;margin-bottom:5px}.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.skill-category{margin-bottom:6px}.skill-label{font-weight:bold;font-size:10pt}.skill-items{font-size:10pt}.print-btn{position:fixed;top:20px;right:20px;background:#10b981;color:white;border:none;padding:12px 24px;font-size:14px;font-weight:bold;cursor:pointer;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,0.2)}@media print{.print-btn{display:none}}</style></head><body><button class="print-btn" onclick="window.print()">Print / Save PDF</button><div class="header"><div class="name">' + cvData.name + '</div><div class="contact-info"><span>' + cvData.location + '</span><span>|</span><span>' + cvData.email + '</span><span>|</span><span>' + cvData.linkedin + '</span><span>|</span><span>' + cvData.github + '</span></div></div><div class="section"><div class="section-title">Professional Summary</div><p class="summary">' + cvData.summary + '</p></div><div class="section"><div class="section-title">Professional Experience</div>' + experienceHTML + '</div><div class="section"><div class="section-title">Education</div>' + educationHTML + '</div><div class="section"><div class="section-title">Technical Skills</div><div class="skills-grid"><div class="skill-category"><span class="skill-label">Frontend: </span><span class="skill-items">' + cvData.skills.frontend.join(', ') + '</span></div><div class="skill-category"><span class="skill-label">Backend: </span><span class="skill-items">' + cvData.skills.backend.join(', ') + '</span></div><div class="skill-category"><span class="skill-label">Mobile: </span><span class="skill-items">' + cvData.skills.mobile.join(', ') + '</span></div><div class="skill-category"><span class="skill-label">IoT: </span><span class="skill-items">' + cvData.skills.iot.join(', ') + '</span></div><div class="skill-category"><span class="skill-label">Databases: </span><span class="skill-items">' + cvData.skills.databases.join(', ') + '</span></div><div class="skill-category"><span class="skill-label">Specialties: </span><span class="skill-items">' + cvData.skills.specialties.join(', ') + '</span></div></div></div><div class="section"><div class="section-title">Key Projects</div>' + projectsHTML + '</div><div class="section"><div class="section-title">Honors & Awards</div>' + awardsHTML + '</div></body></html>';
 
-            // Write the CV to the new window
-            cvWindow.document.write(cvHTML);
-            cvWindow.document.close();
+            // Try to open new window first
+            const cvWindow = window.open('', '_blank');
+            
+            if (cvWindow) {
+                // Write the CV to the new window
+                cvWindow.document.write(cvHTML);
+                cvWindow.document.close();
+            } else {
+                // Fallback: Download as HTML file if popup is blocked
+                const blob = new Blob([cvHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'CV_Julyan_Widianto.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert('Pop-up was blocked. CV has been downloaded as an HTML file. Open it in your browser and use Print > Save as PDF to get the PDF version.');
+            }
         }
     </script>
 
